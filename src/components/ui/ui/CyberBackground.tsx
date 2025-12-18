@@ -3,7 +3,8 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Points, PointMaterial, MeshDistortMaterial, Float } from "@react-three/drei";
-// @ts-ignore
+import * as THREE from "three";
+// @ts-expect-error - maath library doesn't have TypeScript definitions
 import * as random from "maath/random/dist/maath-random.esm";
 
 export const CyberBackground = () => {
@@ -25,8 +26,8 @@ export const CyberBackground = () => {
   );
 };
 
-const PointsWrapper = (props: any) => {
-  const ref = useRef<any>();
+const PointsWrapper = () => {
+  const ref = useRef<THREE.Points>(null);
   const sphere = random.inSphere(new Float32Array(5000), { radius: 1.5 });
 
   useFrame((state, delta) => {
@@ -38,7 +39,7 @@ const PointsWrapper = (props: any) => {
 
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
-      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
+      <Points ref={ref} positions={sphere} stride={3} frustumCulled={false}>
         <PointMaterial
           transparent
           color="#06b6d4"
@@ -56,7 +57,7 @@ const CyberCore = () => {
         <mesh position={[0.5, 0, -2]} scale={[0.4, 0.4, 0.4]}>
             <icosahedronGeometry args={[1, 4]} />
             <MeshDistortMaterial
-                color="#10b981"
+                color="#10b781"
                 attach="material"
                 distort={0.4}
                 speed={2}
@@ -66,4 +67,4 @@ const CyberCore = () => {
             />
         </mesh>
     );
-}
+};

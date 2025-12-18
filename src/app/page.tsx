@@ -23,14 +23,11 @@ import {
   Layers,
 } from "lucide-react";
 import {
-  SiReact,
   SiNextdotjs,
   SiTailwindcss,
   SiTypescript,
   SiNodedotjs,
   SiMongodb,
-  SiRedux,
-  SiFirebase,
   SiSelenium,
   SiPostman,
   SiCplusplus,
@@ -60,6 +57,12 @@ const jetbrains = JetBrains_Mono({
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 // ── DATA ────────────────────────────────────────────────────────────────
+
+type Skill = {
+  name: string;
+  icon: React.ComponentType<{ className?: string }>;
+  color: string;
+};
 
 const STATS = [
   {
@@ -367,10 +370,12 @@ export default function Portfolio() {
                 }}
               >
                 <div className="relative w-full h-full flex flex-col items-center justify-end p-8 bg-gradient-to-t from-black/60 via-transparent to-transparent">
-                  <img
+                  <Image
                     src="/shovan-img.png"
                     alt="Shovan Bhattacharjee"
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    className="object-cover"
+                    priority
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-gray-900 to-black opacity-10" />
@@ -427,7 +432,7 @@ export default function Portfolio() {
               {Object.keys(SKILL_ICONS).map((key) => (
                 <button
                   key={key}
-                  onClick={() => setActiveTab(key as any)}
+                  onClick={() => setActiveTab(key as keyof typeof SKILL_ICONS)}
                   className={cn(
                     "px-6 py-2 rounded-md font-mono text-sm transition-all",
                     activeTab === key
@@ -441,7 +446,7 @@ export default function Portfolio() {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {SKILL_ICONS[activeTab]?.map((skill: any, idx: number) => (
+              {SKILL_ICONS[activeTab]?.map((skill: Skill, idx: number) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 10 }}
@@ -670,7 +675,7 @@ export default function Portfolio() {
       {/* ── CONTACT ──────────────────────────────────────────────────────── */}
       <Section id="contact" className="py-32 max-w-4xl mx-auto px-6">
         <h2 className="text-4xl md:text-6xl font-bold text-center text-white mb-16">
-          <span className="text-emerald-400">05.</span> Let's Connect
+          <span className="text-emerald-400">05.</span> Let&apos;s Connect
         </h2>
 
         {/* Glassmorphic Card */}
@@ -686,7 +691,7 @@ export default function Portfolio() {
                 <span>Ready to collaborate?</span>
               </div>
               <p className="text-xl text-slate-300">
-                Drop me a message — I'll get back to you within 24 hours.
+                Drop me a message — I&apos;ll get back to you within 24 hours.
               </p>
             </div>
 
@@ -775,7 +780,7 @@ export default function Portfolio() {
                   className="text-center text-emerald-400 font-semibold text-lg flex items-center justify-center gap-3"
                 >
                   <span className="text-2xl">✓</span> Message sent successfully!
-                  I'll reply soon.
+                  I&apos;ll reply soon.
                 </motion.div>
               )}
 
