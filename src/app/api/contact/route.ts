@@ -12,7 +12,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: process.env.EMAIL_FROM || 'Contact Form <onboarding@resend.dev>',
       to: [process.env.EMAIL_TO || 'shovancse.iiuc.cp@gmail.com'],
       replyTo: email,
@@ -30,9 +30,15 @@ export async function POST(request: Request) {
       `,
     });
 
+    if (error) {
+      console.error('Resend error:', error);
+      return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    }
+
+    console.log('Email sent successfully:', data);
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Email error:', error);
-    return NextResponse.json({ error: 'Failed to send' }, { status: 500 });
+    console.error('Unexpected error:', error);
+    return NextResponse.json({ error: 'Server error' }, { status: 500 });
   }
 }
