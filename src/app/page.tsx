@@ -180,7 +180,7 @@ services:
 const PROJECTS = [
   {
     title: "PingMe - Realtime Chat",
-    img: "/1754936250266.jfif",
+    img: "/1754936250266.png",
     tagline: "MERN + Socket.io",
     desc: "Real-time messaging application with online status, typing indicators, and secure authentication.",
     tech: ["Socket.io", "React", "Node.js", "MongoDB", "Redux"],
@@ -190,7 +190,7 @@ const PROJECTS = [
   },
   {
     title: "AI Content Generator",
-    img: "/1753806714762.jfif",
+    img: "/1753806714762.png",
     tagline: "SaaS Platform",
     desc: "AI-powered tool for generating professional blog posts and emails with secure authentication and media management.",
     tech: ["Next.js", "TypeScript", "Prisma", "NextAuth", "Zod"],
@@ -200,7 +200,7 @@ const PROJECTS = [
   },
   {
     title: "Knowledge Corner",
-    img: "/1716485570000.jfif",
+    img: "/1716485570000.png",
     tagline: "Library Management System",
     desc: "Full-stack system for book inventory, borrowing, returns, and automatic fine calculation.",
     tech: ["React", "Node.js", "MongoDB", "JWT", "Firebase"],
@@ -213,7 +213,7 @@ const PROJECTS = [
   },
   {
     title: "Asia Adventure",
-    img: "/1714734363387.jfif",
+    img: "/1714734363387.png",
     tagline: "Tourism Booking Platform",
     desc: "Dynamic travel platform for exploring and booking adventure packages across Asia.",
     tech: ["React", "Tailwind", "Firebase", "Express"],
@@ -735,6 +735,7 @@ COMMIT;`,
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-12 text-center font-mono text-white">
           <span className="text-emerald-500">02.</span> Deployed Projects
         </h2>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
           {PROJECTS.map((project, idx) => (
             <motion.div
@@ -745,23 +746,24 @@ COMMIT;`,
               whileHover={{ y: -10 }}
               className="group relative bg-[#111827] border border-gray-800 rounded-2xl overflow-hidden hover:border-emerald-500/50 transition-all duration-300 shadow-2xl flex flex-col"
             >
-              <div className="h-48 bg-linear-to-br from-gray-900 to-black relative overflow-hidden border-b border-gray-800 group-hover:bg-gray-900/50 transition-colors">
-                <div className="absolute inset-0 opacity-20 bg-slate-900"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {
-                    project.img ? (
-                      <Image
-                        src={project.img}
-                        alt={project.title}
-                        width={400}
-                        height={400}
-                        className="object-cover object-top max-h-100"
-                      />
-                    ) : (
-                      <project.icon className="text-6xl text-emerald-500" />
-                    )
-                  }
-                </div>
+              <div className="relative h-64 md:h-72 overflow-hidden bg-gray-900">
+                {project.img ? (
+                  <Image
+                    src={project.img}
+                    alt={`${project.title} preview`}
+                    fill
+                    className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    priority={idx < 2}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
+                ) : (
+                  <div className="flex items-center justify-center h-full bg-linear-to-br from-gray-800 to-gray-900">
+                    <project.icon
+                      size={64}
+                      className="text-emerald-500 opacity-70"
+                    />
+                  </div>
+                )}
               </div>
               <div className="p-6 flex flex-col grow">
                 <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">
@@ -773,6 +775,7 @@ COMMIT;`,
                 <p className="text-slate-400 text-sm mb-6 leading-relaxed grow">
                   {project.desc}
                 </p>
+
                 <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((t) => (
                     <span
@@ -783,17 +786,22 @@ COMMIT;`,
                     </span>
                   ))}
                 </div>
+
                 <div className="flex gap-4 pt-4 border-t border-gray-800">
                   {project.clientRepo ? (
                     <div className="flex gap-4">
                       <a
                         href={project.clientRepo}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
                       >
                         <Github size={16} /> Client
                       </a>
                       <a
                         href={project.serverRepo}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
                       >
                         <Github size={16} /> Server
@@ -802,6 +810,8 @@ COMMIT;`,
                   ) : (
                     <a
                       href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
                     >
                       <Github size={16} /> Source
@@ -809,6 +819,8 @@ COMMIT;`,
                   )}
                   <a
                     href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors ml-auto"
                   >
                     Live Demo <ExternalLink size={16} />
